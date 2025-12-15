@@ -1,11 +1,13 @@
 "use client"
 
 import { useState } from "react"
+import { useAuth } from "../context/AuthContext"
 import { motion } from "framer-motion"
 import Image from "next/image"
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const { user, logout } = useAuth()
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId)
@@ -55,6 +57,14 @@ export default function Header() {
             >
               Peace Jar
             </button>
+            {user && (
+              <button
+                onClick={logout}
+                className="text-gray-600 hover:text-red-600 transition-colors duration-200 font-medium"
+              >
+                Logout
+              </button>
+            )}
           </nav>
 
           {/* Hamburger for mobile */}
@@ -66,9 +76,9 @@ export default function Header() {
             >
               {/* Hamburger Icon */}
               <svg width="28" height="28" fill="none" viewBox="0 0 24 24">
-                <rect y="5" width="24" height="2" rx="1" fill="#6B7280"/>
-                <rect y="11" width="24" height="2" rx="1" fill="#6B7280"/>
-                <rect y="17" width="24" height="2" rx="1" fill="#6B7280"/>
+                <rect y="5" width="24" height="2" rx="1" fill="#6B7280" />
+                <rect y="11" width="24" height="2" rx="1" fill="#6B7280" />
+                <rect y="17" width="24" height="2" rx="1" fill="#6B7280" />
               </svg>
             </button>
             {/* Dropdown Menu */}
@@ -92,6 +102,17 @@ export default function Header() {
                 >
                   Peace Jar
                 </button>
+                {user && (
+                  <button
+                    onClick={() => {
+                      logout()
+                      setMenuOpen(false)
+                    }}
+                    className="text-gray-700 hover:bg-red-50 px-4 py-2 text-left"
+                  >
+                    Logout
+                  </button>
+                )}
               </div>
             )}
           </div>
